@@ -8,7 +8,7 @@ My own implementation of a markdown parser made with javascript. It will be a sm
 - [x]  Bold
 - [x]  Italic
 - [x]  Unordered lists
-- [x]  links
+- [x]  Links
 - [ ]  Ordered lists
 - [ ]  Better support for cli commands
 - [ ]  Code blocks
