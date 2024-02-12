@@ -1,19 +1,7 @@
-import { heading, paragraph, bold, italic, listItem } from "./Rules.js";
+import { heading, bold, italic, listItem, link } from "./Rules.js";
 
 export class Tokenizer {
   constructor() {
-    this.inlineRules = [
-      {
-        type: "bold",
-        pattern: bold,
-        parse: (match) => ({ text: match[1] }),
-      },
-      {
-        type: "italic",
-        pattern: italic,
-        parse: (match) => ({ text: match[1] }),
-      },
-    ];
     this.rules = [
       {
         type: "header",
@@ -34,6 +22,7 @@ export class Tokenizer {
     const patterns = [
       { type: "bold", regex: bold },
       { type: "italic", regex: italic },
+      { type: "link", regex: link },
     ];
 
     let cursor = 0;
@@ -52,6 +41,7 @@ export class Tokenizer {
           matches.push({
             type: pattern.type,
             text: match[1],
+            href: match[2],
             index: match.index,
             length: match[0].length,
           });
@@ -61,20 +51,22 @@ export class Tokenizer {
 
     matches.sort((a, b) => a.index - b.index);
 
-    // Procesar los matches en el orden de aparición
     matches.forEach((m) => {
       if (m.index > cursor) {
-        // Agregar texto plano antes del match actual
         inlineTokens.push({
           type: "text",
           text: text.substring(cursor, m.index),
         });
       }
-      inlineTokens.push({ type: m.type, text: m.text });
+      if (m.type === "link") {
+        inlineTokens.push({ type: m.type, text: m.text, href: m.href });
+      } else {
+        inlineTokens.push({ type: m.type, text: m.text });
+      }
+
       cursor = m.index + m.length;
     });
 
-    // Agregar cualquier texto restante después del último match como texto plano
     if (cursor < text.length) {
       inlineTokens.push({ type: "text", text: text.substring(cursor) });
     }

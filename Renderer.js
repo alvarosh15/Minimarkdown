@@ -32,6 +32,8 @@ export class Renderer {
             return `<strong>**${token.text}**</strong>`;
           case "italic":
             return `<em>*${token.text}*</em>`;
+          case "link":
+            return `<a href="${token.href}">[${token.text}](${token.href})</a>`;
           case "text":
           default:
             return token.text;
