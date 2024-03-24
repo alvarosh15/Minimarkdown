@@ -1,0 +1,22 @@
+{
+  "name": "minimarkdown",
+  "version": "1.0.0",
+  "description": "Small markdown parser make from scratch",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alvarosh15/Minimarkdown.git"
+  },
+  "author": "alvaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alvarosh15/Minimarkdown/issues"
+  },
+  "homepage": "https://github.com/alvarosh15/Minimarkdown#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
