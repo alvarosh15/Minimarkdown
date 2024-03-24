@@ -1,7 +1,8 @@
 {
   "name": "minimarkdown",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Small markdown parser make from scratch",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "jest"
