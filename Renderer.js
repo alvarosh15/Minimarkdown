@@ -1,5 +1,5 @@
 export class Renderer {
-  render(tokens) {
+  render(tokens, preview = false) {
     let html = "";
     tokens.forEach((token) => {
       switch (token.type) {
@@ -8,7 +8,12 @@ export class Renderer {
           for (let i = 0; i < token.level; i++) {
             htmlText += "#";
           }
-          html += `<h${token.level}>${htmlText} ${token.text}</h${token.level}> `;
+          if (preview) {
+            html += `<h${token.level}>${htmlText} ${token.text}</h${token.level}> `;
+          } else {
+            html += `<h${token.level}>${token.text}</h${token.level}> `;
+          }
+
           break;
         case "listItem":
           html += `<li>${token.text}</li>`;
@@ -17,23 +22,35 @@ export class Renderer {
           if (this.renderInline(token) === "") {
             html += "<br>";
           } else {
-            html += `<p>${this.renderInline(token)}</p>`;
+            html += `<p>${this.renderInline(token, preview)}</p>`;
           }
       }
     });
     return html;
   }
 
-  renderInline(inlineTokens) {
+  renderInline(inlineTokens, preview = false) {
     return inlineTokens
       .map((token) => {
         switch (token.type) {
           case "bold":
-            return `<strong>**${token.text}**</strong>`;
+            if (preview) {
+              return `<strong>**${token.text}**</strong>`;
+            } else {
+              return `<strong>${token.text}</strong>`;
+            }
           case "italic":
-            return `<em>*${token.text}*</em>`;
+            if (preview) {
+              return `<em>*${token.text}*</em>`;
+            } else {
+              return `<em>${token.text}</em>`;
+            }
           case "link":
-            return `<a href="${token.href}">[${token.text}](${token.href})</a>`;
+            if (preview) {
+              return `<a href="${token.href}" target="_blank">[${token.text}](${token.href})</a>`;
+            } else {
+              return `<a href="${token.href}" target="_blank">${token.text}</a>`;
+            }
           case "text":
           default:
             return token.text;

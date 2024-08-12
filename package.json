@@ -1,5 +1,14 @@
 {
   "name": "minimarkdown",
   "version": "0.0.1",
-  "type": "module"
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest --coverage"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^1.2.2",
+    "vitest": "^1.2.2"
+  }
 }
